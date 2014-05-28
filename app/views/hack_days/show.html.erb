@@ -1,0 +1,15 @@
+<% provide(:title,@hack_day.title) %>
+<div class="center hero-unit">
+  <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+  <% end %>
+  <h1><%= @hack_day.title %></h1>
+  <h2>Vote Below, <%=@votes_left%> votes left</h2>
+  <%= form_tag(project_path(@hack_day.id),method: "put") do %>
+    <% @hack_day.projects.each do |x| %>
+      <%= radio_button_tag(:vote, x.id) %>
+      <%= label_tag(x.value.to_sym, "#{x.value} -- #{x.num_votes}") %>
+    <% end %>
+    <%= submit_tag "Vote", class: "btn btn-large btn-primary" %>
+  <% end %>
+</div>

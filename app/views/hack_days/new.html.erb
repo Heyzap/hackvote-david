@@ -1,0 +1,36 @@
+
+<% provide(:title,"New Vote") %>
+<div class="center hero-unit">
+  <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+  <% end %>
+  <h1>New Vote</h1>
+  <%= form_tag(hack_days_path, method: "post") do %>
+    <%= label_tag :title, "Title"%>
+    <%= text_field_tag :title, "#{@title}" %>
+    <div id="Projects">
+      <%= label_tag "projects[]", "Enter the vote options below, comma seperated" %>
+      <% @projects.each do |string| %>
+        <%= label_tag "projects[]", " " %>
+        <%= text_field_tag "projects[]", "#{string}"%>
+      <% end %>
+    </div>
+    <a href="javascript:;" id="addProject">Add More Projects</a>
+    <br>
+    <%= submit_tag("Create Vote", class: "btn btn-large btn-primary") %>
+  <% end %> 
+</div>
+
+<div class="hide" id="new_projects">
+  <%= label_tag "projects[]", " " %>
+  <%= text_field_tag "projects[]" %>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#addProject").click(function(){
+    $("#Projects").append($("#new_projects").html());
+  });
+});
+</script>
+
