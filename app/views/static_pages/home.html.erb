@@ -1,0 +1,22 @@
+<% provide(:title,"Home") %>
+<div class="center hero-unit">
+  <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+  <% end %>
+  <h1>Welcome</h1>
+  <p>Welcome to the HackDay voting page, Vote below, or make a new Vote!</p>
+  <% if HackDay.any? %>
+    <table style="width:500px"
+      <tr>
+        <th>Vote Name</th>
+        <th>Created At</th>
+      </tr>
+      <%HackDay.all.each do |x|%>
+        <tr>
+          <td><%=link_to(x.title,hack_day_path(x.id))%></td>
+          <td><%=x.created_at %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+</div>
