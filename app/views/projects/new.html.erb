@@ -1,0 +1,31 @@
+
+<% provide(:title,"New Project for #{@new_project.hack_day.title}") %>
+<div class="center hero-unit">
+  <% if @new_project.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@new_project.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @new_project.errors.full_messages.each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+  <% if flash[:notice].present? %>
+    <div class="alert alert-notice"><%= flash[:notice] %></div>
+  <% end %>
+  <h1>New Project for <%= "#{@new_project.hack_day.title}" %></h1>
+  <%= form_for(@new_project) do |f| %>
+    <%= f.label :description, "Enter a description" %>
+    <%= f.text_field :description %>
+    <div class="hide">
+    	<%= f.text_field :hack_day_id %>
+    </div>
+    <%= f.label " " %>
+    <%= f.submit "Add Project", :class => "btn btn-large btn-primary" %>
+  <% end %>
+</div>
+
+

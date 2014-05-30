@@ -1,36 +1,27 @@
-
 <% provide(:title,"New Vote") %>
 <div class="center hero-unit">
-  <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= value %></div>
+  <% if @new_hack_day.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@new_hack_day.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @new_hack_day.errors.full_messages.each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+  <% if flash[:notice].present? %>
+    <div class="alert alert-notice"><%= flash[:notice] %></div>
   <% end %>
   <h1>New Vote</h1>
-  <%= form_tag(hack_days_path, method: "post") do %>
-    <%= label_tag :title, "Title"%>
-    <%= text_field_tag :title, "#{@title}" %>
-    <div id="Projects">
-      <%= label_tag "projects[]", "Enter the vote options below, comma seperated" %>
-      <% @projects.each do |string| %>
-        <%= label_tag "projects[]", " " %>
-        <%= text_field_tag "projects[]", "#{string}"%>
-      <% end %>
-    </div>
-    <a href="javascript:;" id="addProject">Add More Projects</a>
-    <br>
-    <%= submit_tag("Create Vote", class: "btn btn-large btn-primary") %>
-  <% end %> 
+  <%= form_for(@new_hack_day) do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.label " " %>
+    <%= f.submit "Create a hack day", :class => "btn btn-large btn-primary" %>
+  <% end %>
 </div>
 
-<div class="hide" id="new_projects">
-  <%= label_tag "projects[]", " " %>
-  <%= text_field_tag "projects[]" %>
-</div>
-
-<script>
-$(document).ready(function(){
-  $("#addProject").click(function(){
-    $("#Projects").append($("#new_projects").html());
-  });
-});
-</script>
 
