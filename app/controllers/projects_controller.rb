@@ -1,13 +1,12 @@
 class ProjectsController < ApplicationController
   def create
-    temp = Project.create(project_params)
-    if temp.invalid?
-      flash[:error] = "Invalid Project"
-      redirect_to new_project_path(:hack_day_id => temp.hack_day_id)
+    @new_project = Project.create(project_params)
+    if @new_project.invalid?
+        render 'new'
       return
     end
 
-    redirect_to temp.hack_day
+    redirect_to @new_project.hack_day
   end
 
   def new
@@ -19,13 +18,13 @@ class ProjectsController < ApplicationController
     session[:remaining_votes][params[:id]] ||= HackDay::MAX_VOTES
 
     if session[:remaining_votes][params[:id]] <= 0
-      flash[:error] = "You are out of votes"
+      flash[:notice] = "You are out of votes"
       redirect_to hack_day_path(params[:id])
       return
     end
 
     if params[:vote].blank?
-      flash[:error] = "Select an option"
+      flash[:notice] = "Select an option"
       redirect_to hack_day_path(params[:id])
       return
     end

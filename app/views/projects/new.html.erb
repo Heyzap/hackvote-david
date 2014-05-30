@@ -1,10 +1,19 @@
 
 <% provide(:title,"New Project for #{@new_project.hack_day.title}") %>
 <div class="center hero-unit">
-  <% if !flash[:error].nil? %>
-    <div class="alert alert-error"><%= flash[:error] %></div>
-  <% end %>
-  <% if !flash[:notice].nil? %>
+  <% if @new_project.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@new_project.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @new_project.errors.full_messages.each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+  <% if flash[:notice].present? %>
     <div class="alert alert-notice"><%= flash[:notice] %></div>
   <% end %>
   <h1>New Project for <%= "#{@new_project.hack_day.title}" %></h1>

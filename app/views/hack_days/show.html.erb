@@ -1,9 +1,6 @@
 <% provide(:title,@hack_day.title) %>
 <div class="center hero-unit">
-  <% if !flash[:error].nil? %>
-    <div class="alert alert-error"><%= flash[:error] %></div>
-  <% end %>
-  <% if !flash[:notice].nil? %>
+  <% if flash[:notice].present? %>
     <div class="alert alert-notice"><%= flash[:notice] %></div>
   <% end %>
   <h1><%= @hack_day.title %></h1>
