@@ -1,15 +1,20 @@
 <% provide(:title,@hack_day.title) %>
 <div class="center hero-unit">
-  <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= value %></div>
+  <% if !flash[:error].nil? %>
+    <div class="alert alert-error"><%= flash[:error] %></div>
+  <% end %>
+  <% if !flash[:notice].nil? %>
+    <div class="alert alert-notice"><%= flash[:notice] %></div>
   <% end %>
   <h1><%= @hack_day.title %></h1>
-  <h2>Vote Below, <%=@votes_left%> votes left</h2>
-  <%= form_tag(project_path(@hack_day.id),method: "put") do %>
-    <% @hack_day.projects.each do |x| %>
-      <%= radio_button_tag(:vote, x.id) %>
-      <%= label_tag(x.value.to_sym, "#{x.value} -- #{x.num_votes}") %>
+  <h2>Vote Below, <%= @votes_left %> votes left</h2>
+  <%= form_tag(project_path(@hack_day.id),:method => "put") do %>
+    <% @hack_day.projects.each do |project| %>
+      <%= radio_button_tag(:vote, project.id) %>
+      <%= label_tag(project.description, "#{project.description} -- #{project.num_votes}") %>
     <% end %>
     <%= submit_tag "Vote", class: "btn btn-large btn-primary" %>
+    <br>
+    <%= link_to "Add a Project", new_project_path(:hack_day_id => @hack_day.id) %>
   <% end %>
 </div>

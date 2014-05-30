@@ -17,13 +17,13 @@ ActiveRecord::Schema.define(version: 20140529174305) do
   enable_extension "plpgsql"
 
   create_table "hack_days", force: true do |t|
-    t.string   "title"
+    t.string   "title" 
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "projects", force: true do |t|
-    t.string   "value"
+    t.string   "description"
     t.integer  "num_votes", default: 0
     t.integer  "hack_day_id"
     t.datetime "created_at"
